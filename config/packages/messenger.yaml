@@ -1,0 +1,28 @@
+framework:
+    messenger:
+        failure_transport: failed
+
+        transports:
+            logs_ingest:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    auto_setup: true
+                    exchange:
+                        name: logs
+                        type: direct
+                    queues:
+                        logs.ingest: ~
+                retry_strategy:
+                    max_retries: 3
+                    delay: 1000
+                    multiplier: 2
+
+            failed: 'doctrine://default?queue_name=failed'
+
+
+when@test:
+    framework:
+        messenger:
+            transports:
+                logs_ingest: 'in-memory://'
+                failed: 'in-memory://'

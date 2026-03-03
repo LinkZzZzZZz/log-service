@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Shared\Service;
+
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+return static function (ContainerConfigurator $di): void {
+    $di->services()
+        ->defaults()
+            ->autowire()
+            ->autoconfigure()
+        ->set(BatchIdGenerator::class);
+};
